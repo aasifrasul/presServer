@@ -25,15 +25,16 @@
             // Fire a query to your DB and check if the credentials are valid
             auth.validate(username, password, function(err, user) {
                 if (!user) {
-                    res.status(401);
+                    res.status(422);
                     res.json({
-                        "status": 401,
+                        "status": 422,
                         "message": "Invalid credentials"
                     });
                     return;
                 } else {
                     user.password = null;
                     res.json(genToken(user));
+                    return;
                 }
             });
         },
@@ -85,8 +86,15 @@
             User.findOneByCond({
                 "username": username
             }, function(err, user) {
-                if (err) cb(err);
-                if (!user || !user.password) cb(true);
+                console.log(user);
+                if (err) {
+                    cb(err);
+                    return;
+                }
+                if (!user || !user.password) {
+                    cb(true);
+                    return;
+                }
 
                 passwordEncryptor.comparePassword(password, user.password, function(err, isPasswordMatch) {
                     return isPasswordMatch ? cb(false, user) : cb(true);
@@ -94,15 +102,14 @@
             });
         },
 
-        validateUser: function(username) {
-            console.log('Hi');
-            user = User.findOneByCond({
+        validateUser: function(username, cb) {
+            return User.findOneByCond({
                 "username": username
+            }, function(err, user) {
+                console.log(user);
+                cb(err, user);
+                return;
             });
-
-            if (!user || !user.password) return false;
-
-            return user;
         },
     }
 

@@ -1,6 +1,6 @@
-"use srict";
-
 (function() {
+
+	"use srict";
 
 	var express = require('express');
 	var router = express.Router();

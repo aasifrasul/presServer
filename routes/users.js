@@ -10,7 +10,6 @@
         getAll: function(conds) {
             User.find(conds,
                 function(err, users) {
-
                     if (err)
                         return err;
                     return users;
@@ -20,9 +19,12 @@
         getOne: function(req, res) {
             User.findById(req.params.id,
                 function(err, user) {
-                    if (err)
+                    if (err) {
                         res.send(err);
+                        return;
+                    }
                     res.json(user);
+                    return;
                 });
         },
 
@@ -30,6 +32,7 @@
             User.findOne(conds,
                 function(err, user) {
                     cb(err, user);
+                    return;
                 });
         },
 
@@ -40,10 +43,13 @@
                 var user = new User(data);
                 user.save(function(err, result) {
                     console.log(err);
-                    if (err)
+                    if (err) {
                         cb(err);
+                        return;
+                    }
 
-                    cb(null,true);
+                    cb(null, true);
+                    return;
                 });
             });
         },
@@ -51,28 +57,44 @@
         update: function(req, res) {
             User.findById(req.params.id,
                 function(err, user) {
-                    if (err)
-                        return err;
+                    if (err) {
+                        res.status(500);
+                        res.json({
+                            "status": 500,
+                            "message": "Internal Server Error"
+                        });
+                        return;
+                    }
 
-                    user.setData(req);
-                    user.save(function(err, result) {
-                        if (err)
-                            return err;
-
-                        return true;
+                    user.save(req.body, function(err, result) {
+                        if (err) {
+                            res.status(500);
+                            res.json({
+                                "status": 500,
+                                "message": "User Failled to Update"
+                            });
+                            return;
+                        }
+                        res.status(200);
+                        res.json({
+                            "status": 200,
+                            "message": "User Updated",
+                            "user": user
+                        });
+                        return;
                     });
                 });
-
         },
 
         delete: function(req, res) {
             User.findById(req.params.id,
                 function(err, user) {
-
-                    if (err)
+                    if (err) {
                         res.send(err);
-
+                        return;
+                    }
                     user.remove().exec();
+                    return;
                 });
         }
     };
