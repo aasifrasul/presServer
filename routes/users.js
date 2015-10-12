@@ -21,9 +21,19 @@
                 function(err, user) {
                     if (err) {
                         res.send(err);
-                        return;
+                    } else if(user) {
+                        res.json({
+                            "status": 200,
+                            "message": "User Fetched",
+                            "user": user
+                        });
+                    } else {
+                        res.status(401);
+                        res.json({
+                            "status": 401,
+                            "message": "Invalid credentials"
+                        });
                     }
-                    res.json(user);
                     return;
                 });
         },
@@ -55,6 +65,7 @@
         },
 
         update: function(req, res) {
+            console.log(req.body);
             User.findById(req.params.id,
                 function(err, user) {
                     if (err) {
@@ -67,6 +78,7 @@
                     }
 
                     user.save(req.body, function(err, result) {
+                        console.log(result);
                         if (err) {
                             res.status(500);
                             res.json({
@@ -87,13 +99,17 @@
         },
 
         delete: function(req, res) {
-            User.findById(req.params.id,
+            User.find({id:req.params.id}).remove(
                 function(err, user) {
                     if (err) {
                         res.send(err);
                         return;
                     }
-                    user.remove().exec();
+                    res.status(200);
+                    res.json({
+                        "status": 200,
+                        "message": "User Deleted"
+                    });
                     return;
                 });
         }
