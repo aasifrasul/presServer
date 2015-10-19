@@ -29,8 +29,6 @@ module.exports = function(req, res, next) {
             // Authorize the user to see if s/he can access our resources
 
             validateUser(key, function(err, user) {
-                console.log(user);
-                console.trace();
                 if (user) {
                     if (req.url.indexOf('/api/v1/') >= 0) {
                         next(); // To move to next middleware
@@ -43,7 +41,7 @@ module.exports = function(req, res, next) {
                         return;
                     }
                 } else {
-                    // No user with this name exists, respond back with a 401
+                    // No user with this name exists, respond back with a 422
                     res.status(422);
                     res.json({
                         "status": 422,

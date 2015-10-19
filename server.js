@@ -6,31 +6,17 @@
     var path = require('path');
     var logger = require('morgan');
     var bodyParser = require('body-parser');
-    //var cookieParser = require('cookie-parser');
     var mongoose = require('mongoose');
-    //var passport = require('passport');
-    //var flash = require('connect-flash');
-    //var fs = require('fs');
-    //var http = require('http')
-    //var server = http.createServer(app)
-    var app = express();
-
     var configDB = require('./config/database.js');
+    var app = express();
 
     mongoose.connect(configDB.url);
 
-    //require('./config/passport')(passport);
-
-    //app.use(cookieParser);
     app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-    //app.use(express.session({ secret: 'knoldus' })); 
-    //app.use(passport.initialize());
-    //app.use(passport.session());
-    //app.use(flash());
 
     app.all('/*', function(req, res, next) {
         // CORS headers
@@ -52,7 +38,6 @@
     app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
 
     app.use('/', require('./routes'));
-    //require('./app/routes.js')(app, passport,server);
 
     // If no route is matched by now, it must be a 404
     app.use(function(req, res, next) {

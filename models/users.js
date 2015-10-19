@@ -26,7 +26,7 @@
         },
         admin: Number,
         address: String,
-        dob: Number,
+        dob: Date,
         updated_by: Number,
         updated_on: Date,
         created_by: Number,

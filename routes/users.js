@@ -49,6 +49,8 @@
         create: function(data, cb) {
             passwordEncryptor.cryptPassword(data.password, function(err, encryptedPassword) {
                 data.password = encryptedPassword;
+                data.created_on = new Date();
+                data.updated_on = new Date();
                 console.log(data);
                 var user = new User(data);
                 user.save(function(err, result) {
@@ -65,10 +67,17 @@
         },
 
         update: function(req, res) {
-            console.log(req.body);
-            User.findById(req.params.id,
+            var data = req.body;
+            data.dob = new Date(data.dob);
+            data.updated_on = new Date();
+            if(!data.password) delete data.password;
+            if(!data.created_on) data.created_on = new Date();
+            console.log(data);
+
+            User.findByIdAndUpdate(req.params.id, data, [],
                 function(err, user) {
                     if (err) {
+                        console.log(err);
                         res.status(500);
                         res.json({
                             "status": 500,
@@ -77,24 +86,13 @@
                         return;
                     }
 
-                    user.save(req.body, function(err, result) {
-                        console.log(result);
-                        if (err) {
-                            res.status(500);
-                            res.json({
-                                "status": 500,
-                                "message": "User Failled to Update"
-                            });
-                            return;
-                        }
-                        res.status(200);
-                        res.json({
-                            "status": 200,
-                            "message": "User Updated",
-                            "user": user
-                        });
-                        return;
+                    res.status(200);
+                    res.json({
+                        "status": 200,
+                        "message": "User Updated",
+                        "user": user
                     });
+                    return;
                 });
         },
 

@@ -8,6 +8,8 @@
 	var auth = require('./auth.js');
 	var products = require('./products.js');
 	var user = require('./users.js');
+	var appointments = require('./appointments.js');
+	var prescriptions = require('./prescriptions.js');
 
 	/*
 	 * Routes that can be accessed by any one
@@ -19,12 +21,23 @@
 	/*
 	 * Routes that can be accessed only by authenticated & authorized users
 	 */
-	router.get('/api/v1/users', user.getAll);
+	//router.get('/api/v1/users', user.getAll);
 	router.get('/api/v1/user/:id', user.getOne);
 	router.post('/api/v1/user/', user.create);
-	router.get('/api/v1/user/:id', user.getOne);
 	router.put('/api/v1/user/:id', user.update);
 	router.delete('/api/v1/user/:id', user.delete);
+
+	router.get('/api/v1/appointments/:userid', appointments.getUserAppointments);
+	router.get('/api/v1/appointment/:id', appointments.getOne);
+	router.post('/api/v1/appointment/', appointments.create);
+	router.put('/api/v1/appointment/:id', appointments.update);
+	router.delete('/api/v1/appointment/:id', appointments.delete);
+
+	router.get('/api/v1/prescriptions/:userid', prescriptions.getUserAppointments);
+	router.get('/api/v1/prescription/:id', prescriptions.getOne);
+	router.post('/api/v1/prescription/', prescriptions.create);
+	router.put('/api/v1/prescription/:id', prescriptions.update);
+	router.delete('/api/v1/prescription/:id', prescriptions.delete);
 
 	module.exports = router;
 

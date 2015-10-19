@@ -8,8 +8,12 @@
 
     // create a schema
     var prescriptionSchema = new Schema({
-        name: String,
+        patient_name: String,
+        doctor_name: String,
         fee: Number,
+        diagnosis: String,
+        recommendation: String,
+        medicines: String,
         doctor_id: String,
         patient_id: String,
         dateTime: {

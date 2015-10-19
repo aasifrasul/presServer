@@ -8,20 +8,27 @@
 
     // create a schema
     var appointmentSchema = new Schema({
-        name: String,
+        patient_name: {
+            type: String,
+            required: true
+        },
+        doctor_name: {
+            type: String,
+            required: true
+        },
+        age: Number,
         dateTime: {
             type: Date,
             required: true
         },
-        doctor_id: String,
-        patient_id: String,
         mobile: {
           type: Number,
           required: true
         },
+        doctor_id: String,
+        patient_id: String,
         email: String,
         location: String,
-        age: Number,
         updated_by: Number,
         updated_on: Date,
         created_by: Number,
