@@ -23,19 +23,19 @@
 	 */
 	//router.get('/api/v1/users', user.getAll);
 	router.get('/api/v1/user/:id', user.getOne);
-	router.post('/api/v1/user/', user.create);
+	router.post('/api/v1/user', user.create);
 	router.put('/api/v1/user/:id', user.update);
 	router.delete('/api/v1/user/:id', user.delete);
 
-	router.get('/api/v1/appointments/:userid', appointments.getUserAppointments);
+	router.get('/api/v1/appointments/:doctor_id', appointments.getDoctorAppointments);
 	router.get('/api/v1/appointment/:id', appointments.getOne);
-	router.post('/api/v1/appointment/', appointments.create);
+	router.post('/api/v1/appointment', appointments.create);
 	router.put('/api/v1/appointment/:id', appointments.update);
 	router.delete('/api/v1/appointment/:id', appointments.delete);
 
 	router.get('/api/v1/prescriptions/:userid', prescriptions.getUserAppointments);
 	router.get('/api/v1/prescription/:id', prescriptions.getOne);
-	router.post('/api/v1/prescription/', prescriptions.create);
+	router.post('/api/v1/prescription', prescriptions.create);
 	router.put('/api/v1/prescription/:id', prescriptions.update);
 	router.delete('/api/v1/prescription/:id', prescriptions.delete);
 

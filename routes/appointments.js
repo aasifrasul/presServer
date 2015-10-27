@@ -6,8 +6,8 @@
 
     var appointments = {
 
-        getUserAppointments: function(req, res) {
-            Appointment.find(req.params.userid,
+        getDoctorAppointments: function(req, res) {
+            Appointment.find({doctor_id:req.params.doctor_id},
                 function(err, appointments) {
                     if (err) {
                         res.send(err);

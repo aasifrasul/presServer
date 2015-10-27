@@ -16,8 +16,16 @@
             type: String,
             required: true
         },
+        gender: {
+            type: Boolean,
+            required: true
+        },
+        purpose: {
+            type: String,
+            required: true
+        },
         age: Number,
-        dateTime: {
+        date_time: {
             type: Date,
             required: true
         },
@@ -25,10 +33,13 @@
           type: Number,
           required: true
         },
-        doctor_id: String,
+        doctor_id: {
+            type: String,
+            required: true
+        },
         patient_id: String,
         email: String,
-        location: String,
+        address: String,
         updated_by: Number,
         updated_on: Date,
         created_by: Number,

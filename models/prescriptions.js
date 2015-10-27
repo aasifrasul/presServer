@@ -8,15 +8,29 @@
 
     // create a schema
     var prescriptionSchema = new Schema({
-        patient_name: String,
-        doctor_name: String,
+        patient_name: {
+            type: String,
+            required: true
+        },
+        doctor_name: {
+            type: String,
+            required: true
+        },
+        gender: {
+            type: Boolean,
+            required: true
+        },
+        age: Number,
         fee: Number,
+        chief_complain: String,
+        medical_history: String,
+        hopi: String,
         diagnosis: String,
         recommendation: String,
         medicines: String,
         doctor_id: String,
         patient_id: String,
-        dateTime: {
+        date_time: {
             type: Date,
             required: true
         },
@@ -25,7 +39,7 @@
             required: true
         },
         email: String,
-        location: String,
+        address: String,
         age: Number,
         updated_by: Number,
         updated_on: Date,
