@@ -22,7 +22,10 @@
             type: String,
             required: true
         },
-        email: String,
+        email: {
+            type: String,
+            unique: true
+        },
         location: String,
         age: Number,
         updated_on: Date,

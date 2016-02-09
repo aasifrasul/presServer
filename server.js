@@ -1,6 +1,6 @@
-"use srict";
-
 (function() {
+
+    "use srict";
 
     var express = require('express');
     var path = require('path');
@@ -9,6 +9,7 @@
     var mongoose = require('mongoose');
     var configDB = require('./config/database.js');
     var app = express();
+    var port = (process.argv[2] || process.env.PORT) || 9000;
 
     mongoose.connect(configDB.url);
 
@@ -47,7 +48,7 @@
     });
 
     // Start the server
-    app.set('port', process.env.PORT || 9000);
+    app.set('port', port);
 
     var server = app.listen(app.get('port'), function() {
         console.log('Prescriptions Server running on port ' + app.get('port'));

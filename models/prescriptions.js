@@ -1,6 +1,6 @@
-"use srict";
-
 (function() {
+
+    "use srict";
 
     // grab the things we need
     var mongoose = require('mongoose');
@@ -20,27 +20,26 @@
             type: Boolean,
             required: true
         },
-        age: Number,
-        fee: Number,
-        chief_complain: String,
-        medical_history: String,
-        hopi: String,
-        diagnosis: String,
-        recommendation: String,
-        medicines: String,
-        doctor_id: String,
-        patient_id: String,
         date_time: {
             type: Date,
             required: true
         },
-        mobile: {
-            type: String,
-            required: true
-        },
+        age: Number,
+        mobile: Number,
+        occupation: String,
+        fee: Number,
+        chief_complain: String,
+        medical_history: String,
+        hopi: String,
+        investigation: String,
+        diagnosis: String,
+        prognosis: String,
+        treatment_plan: String,
+        medicines: String,
+        doctor_id: String,
+        patient_id: String,
         email: String,
         address: String,
-        age: Number,
         updated_by: Number,
         updated_on: Date,
         created_by: Number,

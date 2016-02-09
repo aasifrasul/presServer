@@ -12,8 +12,14 @@
             type: String,
             required: true
         },
-        mobile: Number,
-        email: String,
+        mobile: {
+            type: Number,
+            required: true
+        },
+        email: {
+            type: String,
+            unique: true
+        },
         location: String,
         dob: Date,
         updated_by: Number,

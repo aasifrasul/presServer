@@ -1,13 +1,13 @@
-"use srict";
-
 (function() {
+
+    "use srict";
 
     var Prescription = require('../models/prescriptions');
 
     var prescriptions = {
 
-        getUserAppointments: function(req, res) {
-            Prescription.find(req.params.userid,
+        getDoctorPrescriptions: function(req, res) {
+            Prescription.find({doctor_id:req.params.doctor_id},
                 function(err, prescriptions) {
                     if (err) {
                         res.send(err);

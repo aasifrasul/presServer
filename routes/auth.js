@@ -1,6 +1,6 @@
-"use srict";
-
 (function() {
+
+    "use srict";
 
     var jwt = require('jwt-simple');
     var User = require('../routes/users');

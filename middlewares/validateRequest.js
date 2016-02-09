@@ -1,71 +1,76 @@
-var jwt = require('jwt-simple');
-var validateUser = require('../routes/auth').validateUser;
+(function() {
 
-module.exports = function(req, res, next) {
+    "use srict";
 
-    // When performing a cross domain request, you will recieve
-    // a preflighted request first. This is to check if our the app
-    // is safe.
+    var jwt = require('jwt-simple');
+    var validateUser = require('../routes/auth').validateUser;
 
-    // We skip the token outh for [OPTIONS] requests.
-    //if(req.method == 'OPTIONS') next();
+    module.exports = function(req, res, next) {
 
-    var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-session-token'];
-    var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
+        // When performing a cross domain request, you will recieve
+        // a preflighted request first. This is to check if our app is safe.
 
-    if (token || key) {
-        try {
-            var decoded = jwt.decode(token, require('../config/secret.js')());
+        // We skip the token outh for [OPTIONS] requests.
+        //if(req.method == 'OPTIONS') next();
 
-            if (decoded.exp <= Date.now()) {
-                res.status(400);
-                res.json({
-                    "status": 400,
-                    "message": "Token Expired"
-                });
-                return;
-            }
+        var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-session-token'];
+        var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
 
-            // Authorize the user to see if s/he can access our resources
+        if (token || key) {
+            try {
+                var decoded = jwt.decode(token, require('../config/secret.js')());
 
-            validateUser(key, function(err, user) {
-                if (user) {
-                    if (req.url.indexOf('/api/v1/') >= 0) {
-                        next(); // To move to next middleware
-                    } else {
-                        res.status(403);
-                        res.json({
-                            "status": 403,
-                            "message": "Not Authorized"
-                        });
-                        return;
-                    }
-                } else {
-                    // No user with this name exists, respond back with a 422
-                    res.status(422);
+                if (decoded.exp <= Date.now()) {
+                    res.status(400);
                     res.json({
-                        "status": 422,
-                        "message": "Invalid User"
+                        "status": 400,
+                        "message": "Token Expired"
                     });
                     return;
                 }
-            }); // The key would be the logged in user's username
 
-        } catch (err) {
-            res.status(500);
+                // Authorize the user to see if s/he can access our resources
+
+                validateUser(key, function(err, user) {
+                    if (user) {
+                        if (req.url.indexOf('/api/v1/') >= 0) {
+                            next(); // To move to next middleware
+                        } else {
+                            res.status(403);
+                            res.json({
+                                "status": 403,
+                                "message": "Not Authorized"
+                            });
+                            return;
+                        }
+                    } else {
+                        // No user with this name exists, respond back with a 422
+                        res.status(422);
+                        res.json({
+                            "status": 422,
+                            "message": "Invalid User"
+                        });
+                        return;
+                    }
+                }); // The key would be the logged in user's username
+
+            } catch (err) {
+                res.status(500);
+                res.json({
+                    "status": 500,
+                    "message": "Oops something went wrong",
+                    "error": err
+                });
+            }
+
+        } else {
+            res.status(401);
             res.json({
-                "status": 500,
-                "message": "Oops something went wrong",
-                "error": err
+                "status": 401,
+                "message": "Invalid Token or Key"
             });
+            return;
         }
+    };
 
-    } else {
-        res.status(401);
-        res.json({
-            "status": 401,
-            "message": "Invalid Token or Key"
-        });
-        return;
-    }
-};
+}());

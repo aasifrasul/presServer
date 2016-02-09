@@ -21,8 +21,7 @@
         },
         mobile: {
             type: Number,
-            required: true,
-            unique: true
+            required: true
         },
         admin: Number,
         address: String,
