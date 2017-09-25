@@ -8,7 +8,7 @@
 
         createContactUs: function(req, res) {
             data = req.body;
-            data.created_on = new Date();
+            data.created_on = Date.now();
             console.log(data);
             var contactus = new Contactus(data);
             contactus.save(function(err, result) {
@@ -28,10 +28,10 @@
 
         update: function(req, res) {
             var data = req.body;
-            data.dob = new Date(data.dob);
-            data.updated_on = new Date();
+            data.dob = Date.parse(data.dob);
+            data.updated_on = Date.now();
             if (!data.password) delete data.password;
-            if (!data.created_on) data.created_on = new Date();
+            if (!data.created_on) data.created_on = Date.now();
             console.log(data);
 
             Misc.findByIdAndUpdate(req.params.id, data, [],

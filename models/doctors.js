@@ -28,8 +28,8 @@
         },
         location: String,
         age: Number,
-        updated_on: Date,
-        created_on: Date
+        updated_on: Number,
+        created_on: Number
     });
 
     // the schema is useless so far

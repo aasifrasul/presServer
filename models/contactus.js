@@ -13,7 +13,7 @@
         mobile: Number,
         email: String,
         message: String,
-        created_on: Date
+        created_on: Number
     });
 
     // the schema is useless so far

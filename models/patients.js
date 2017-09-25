@@ -23,9 +23,9 @@
         location: String,
         dob: Date,
         updated_by: Number,
-        updated_on: Date,
+        updated_on: Number,
         created_by: Number,
-        created_on: Date
+        created_on: Number
     });
 
     // the schema is useless so far
